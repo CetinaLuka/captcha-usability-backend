@@ -15,7 +15,7 @@ var poskusiRouter = require('./routes/poskusi');
 var app = express();
 app.use(cors({origin: ['http://localhost:3000', "https://captcha-vercel.vercel.app"], credentials: true}));
 app.use(session({
-   resave: true, secret: '123456' , saveUninitialized: true, secure: true,
+   resave: true, secret: '123456' , saveUninitialized: true, secure: true
 }));
 app.use(bodyParser.json());
 // view engine setup

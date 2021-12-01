@@ -6,7 +6,7 @@ router.get('/slide/create', function (req, res) {
     sliderCaptcha.create()
         .then(function ({ data, solution }) {
             req.session.captcha = solution;
-            req.session.save();
+            //req.session.save();
             res.status(200).send(data);
         })
         .catch((err) => {
@@ -20,7 +20,7 @@ router.post('/slide/verify', function (req, res) {
         .then(function (verification) {
             if (verification.result === 'success') {
                 req.session.token = verification.token;
-                req.session.save();
+                //req.session.save();
             }
             res.status(200).send(verification);
         });

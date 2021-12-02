@@ -1,14 +1,14 @@
 var express = require('express');
+const MongoClient = require('mongodb').MongoClient;
 var router = express.Router();
 var sliderCaptcha = require('@slider-captcha/core');
+const uri = "mongodb+srv://pmib-user:pmib-user@cluster0.ululh.mongodb.net/<dbname>?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 router.get('/slide/create', function (req, res) {
     sliderCaptcha.create()
         .then(function ({ data, solution }) {
-            console.log(data);
-            req.session.captcha = solution;
-            req.session.save();
-            res.send(data);
+            res.json({data: data, solution: solution});
         })
         .catch((err) => {
             console.log(err);
@@ -18,17 +18,6 @@ router.get('/slide/create', function (req, res) {
 
 router.get('/slide/createe', function (req, res) {
     res.json({ test: "test" });
-});
-
-router.post('/slide/verify', function (req, res) {
-    sliderCaptcha.verify(req.session.captcha, req.body)
-        .then(function (verification) {
-            if (verification.result === 'success') {
-                req.session.token = verification.token;
-                req.session.save();
-            }
-            res.status(200).send(verification);
-        });
 });
 
 module.exports = router;
